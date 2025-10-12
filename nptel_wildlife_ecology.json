@@ -1119,105 +1119,6 @@
         "maladaptation"
       ],
       "answer": "mitigation"
-    },
-    {
-      "question": "Ludwig's ratchet predicts",
-      "options": [
-        "decreasing harvesting rate",
-        "constant harvesting rate",
-        "increasing harvesting rate",
-        "fluctuating harvesting rate"
-      ],
-      "answer": "increasing harvesting rate"
-    },
-    {
-      "question": "A pest population is called controlled when",
-      "options": [
-        "it is not increasing",
-        "it is decreasing",
-        "it is not causing any economic damage",
-        "it is not causing excessive economic damage"
-      ],
-      "answer": "it is not causing excessive economic damage"
-    },
-    {
-      "question": "Which of these is not an impact of toxic chemicals?",
-      "options": [
-        "lethal effects",
-        "sub-lethal effects",
-        "reduction of existing stressors",
-        "reduced fecundity"
-      ],
-      "answer": "reduction of existing stressors"
-    },
-    {
-      "question": "Which of these is correct?",
-      "options": [
-        "The maximum sustainable yield is near the beginning of the sigmoidal curve.",
-        "The maximum sustainable yield is near the mid-point of the sigmoidal curve.",
-        "The maximum sustainable yield is near the end of the sigmoidal curve.",
-        "None of these"
-      ],
-      "answer": "The maximum sustainable yield is near the mid-point of the sigmoidal curve."
-    },
-    {
-      "question": "A root zone treatment plant is an example of",
-      "options": [
-        "phytoremediation",
-        "biological control",
-        "biomagnification",
-        "bioaccumulation"
-      ],
-      "answer": "phytoremediation"
-    },
-    {
-      "question": "A pest population is called uncontrolled when",
-      "options": [
-        "it is increasing",
-        "it is not decreasing",
-        "it is causing some economic damage",
-        "it is causing excessive economic damage"
-      ],
-      "answer": "it is causing excessive economic damage"
-    },
-    {
-      "question": "The impact of El Nino on fishery collapse in Peru is explained by",
-      "options": [
-        "match hypothesis",
-        "mismatch hypothesis",
-        "match-mismatch hypothesis",
-        "none of these"
-      ],
-      "answer": "match-mismatch hypothesis"
-    },
-    {
-      "question": "A deciduous forest in Madhya Pradesh was converted to a mine. After the mining operations were over, the pits were filled up with soil and species of deciduous forest planted again. This is an example of",
-      "options": [
-        "recovery",
-        "restoration",
-        "enhancement"
-      ],
-      "answer": "restoration"
-    },
-    {
-      "question": "A deciduous forest in Madhya Pradesh was converted to a mine. After the mining operations were over, the pits were filled up with water and a lake was created. It is now visited by several migratory birds. This is an example of",
-      "options": [
-        "recovery",
-        "restoration",
-        "enhancement",
-        "replacement"
-      ],
-      "answer": "replacement"
-    },
-    {
-      "question": "Which of these is correct?",
-      "options": [
-        "R + G = M + F",
-        "R + M = G + F",
-        "R + F = M + G",
-        "R + G + M + F = 0"
-      ],
-      "answer": "R + G = M + F"
     }
   ],
   "Week 11: Assignment 11": [
@@ -1321,4 +1222,5 @@
       "answer": "R + G = M + F"
     }
   ]
+
 }
