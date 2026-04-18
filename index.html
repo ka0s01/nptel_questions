@@ -43,7 +43,7 @@
     <div class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300">
 
         <div id="setup-container">
-            <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Wildlife Ecology Quiz</h1>
+            <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Education for sustainable development Quiz</h1>
 
             <div class="border border-gray-200 p-4 rounded-lg">
                 <h3 class="text-lg font-semibold text-gray-800 text-center mb-1">Standard Quiz</h3>
@@ -156,13 +156,13 @@
                 loadingText.classList.remove('hidden');
                 startQuizBtn.disabled = true;
                 startTestBtn.disabled = true;
-                const response = await fetch('./nptel_wildlife_ecology.json');
+                const response = await fetch('./nptel_education_sustainable.json');
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 allQuestions = await response.json();
                 populateWeekSelectors();
             } catch (error) {
                 console.error("Failed to load questions:", error);
-                setupContainer.innerHTML = `<p class="text-red-500 text-center">Failed to load quiz data. Make sure 'nptel_wildlife_ecology.json' is in the same folder.</p>`;
+                setupContainer.innerHTML = `<p class="text-red-500 text-center">Failed to load quiz data. Make sure 'nptel_education_sustainable.json' is in the same folder.</p>`;
             } finally {
                 loadingText.classList.add('hidden');
                 startQuizBtn.disabled = false;
