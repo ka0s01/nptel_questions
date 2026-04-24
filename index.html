@@ -1,362 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education for sustainable development</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles to enhance the UI */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .quiz-option.correct {
-            background-color: #22c55e;
-            /* green-500 */
-            color: white;
-            border-color: #16a34a;
-            /* green-600 */
-        }
-
-        .quiz-option.incorrect {
-            background-color: #ef4444;
-            /* red-500 */
-            color: white;
-            border-color: #dc2626;
-            /* red-600 */
-        }
-
-        .quiz-option:disabled {
-            cursor: not-allowed;
-            opacity: 0.9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NPTEL Practice</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+  
+  </style>
 </head>
+<body>
 
-<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+<!-- ═══ PAGE: UPLOAD ═══ -->
+<div id="page-upload" class="page active">
+  <div class="logo">NPTEL // PRACTICE</div>
+  <div class="card">
+    <div class="label">Getting Started</div>
+    <h1 style="margin-bottom:8px;">Upload Your<br/>Question Bank</h1>
+    <p style="margin-bottom:28px;">Drop your NPTEL JSON files to begin practicing. Each file should be a course's question bank.</p>
 
-    <div class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8 transition-all duration-300">
-
-        <div id="setup-container">
-            <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Education for sustainable development Quiz</h1>
-
-            <div class="border border-gray-200 p-4 rounded-lg">
-                <h3 class="text-lg font-semibold text-gray-800 text-center mb-1">Standard Quiz</h3>
-                <p class="text-center text-gray-600 mb-4">Select a range of weeks to study.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="start-week" class="block text-sm font-medium text-gray-700 mb-1">Start Week</label>
-                        <select id="start-week"
-                            class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></select>
-                    </div>
-                    <div>
-                        <label for="end-week" class="block text-sm font-medium text-gray-700 mb-1">End Week</label>
-                        <select id="end-week"
-                            class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></select>
-                    </div>
-                </div>
-                <button id="start-quiz-btn"
-                    class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Start Week-Based Quiz
-                </button>
-            </div>
-
-            <div class="relative flex py-5 items-center">
-                <div class="flex-grow border-t border-gray-300"></div>
-                <span class="flex-shrink mx-4 text-gray-400 font-semibold">OR</span>
-                <div class="flex-grow border-t border-gray-300"></div>
-            </div>
-
-            <div class="border border-gray-200 p-4 rounded-lg">
-                <h3 class="text-lg font-semibold text-gray-800 text-center mb-1">Challenge Mode</h3>
-                <p class="text-center text-gray-600 mb-4">Take a comprehensive test with 50 random questions from all
-                    weeks.</p>
-                <button id="start-test-btn"
-                    class="w-full bg-gray-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition-all duration-200 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600">
-                    Start Test Mode
-                </button>
-            </div>
-
-            <p id="loading-text" class="text-center text-gray-500 mt-4 hidden">Loading questions...</p>
-        </div>
-
-        <div id="quiz-container" class="hidden">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold">Question <span id="question-number"></span>/<span
-                        id="total-questions"></span></h2>
-                <div class="flex items-center gap-4">
-                    <div class="text-lg font-bold text-gray-700">Time: <span id="timer">00:00</span></div>
-                    <div class="text-lg font-bold text-blue-600">Score: <span id="score">0</span></div>
-                </div>
-            </div>
-            <div id="question-card" class="bg-gray-50 p-6 rounded-lg shadow-inner">
-                <p id="question-text" class="text-lg font-medium mb-5 text-gray-900"></p>
-                <div id="options-container" class="grid grid-cols-1 gap-3"></div>
-            </div>
-            <button id="next-question-btn"
-                class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-md mt-6 hidden">Next</button>
-        </div>
-
-        <div id="result-container" class="hidden">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Quiz Complete! 🏆</h2>
-                <p class="text-xl text-gray-700 mb-2">Your Final Score:</p>
-                <p id="final-score" class="text-5xl font-extrabold text-blue-600 mb-2">0 / 0</p>
-                <p class="text-lg text-gray-600 mb-6">Time Taken: <span id="total-time-taken"
-                        class="font-semibold"></span></p>
-            </div>
-            <div id="incorrect-answers-review" class="mt-8 text-left"></div>
-            <button id="restart-quiz-btn"
-                class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-800 transition-all duration-200 shadow-md mt-8">
-                Try Another Quiz
-            </button>
-        </div>
-
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept=".json" multiple />
+      <div class="drop-icon">📂</div>
+      <h3>Drop JSON files here</h3>
+      <p>or click to browse · supports multiple files</p>
     </div>
 
-    <script>
-        // DOM element references
-        const setupContainer = document.getElementById('setup-container');
-        const quizContainer = document.getElementById('quiz-container');
-        const resultContainer = document.getElementById('result-container');
-        const startWeekSelect = document.getElementById('start-week');
-        const endWeekSelect = document.getElementById('end-week');
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        const startTestBtn = document.getElementById('start-test-btn'); // New button
-        const loadingText = document.getElementById('loading-text');
-        const questionNumberEl = document.getElementById('question-number');
-        const totalQuestionsEl = document.getElementById('total-questions');
-        const scoreEl = document.getElementById('score');
-        const timerEl = document.getElementById('timer');
-        const questionTextEl = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const nextQuestionBtn = document.getElementById('next-question-btn');
-        const finalScoreEl = document.getElementById('final-score');
-        const totalTimeTakenEl = document.getElementById('total-time-taken');
-        const restartQuizBtn = document.getElementById('restart-quiz-btn');
-        const reviewContainer = document.getElementById('incorrect-answers-review');
+    <div class="upload-chips" id="upload-chips"></div>
 
-        // Quiz state variables
-        let allQuestions = {};
-        let quizQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let incorrectlyAnsweredQuestions = [];
-        let timerInterval = null;
-        let startTime = 0;
+    <div class="divider"></div>
 
-        // --- DATA LOADING & SETUP ---
-        async function loadQuestions() {
-            try {
-                loadingText.classList.remove('hidden');
-                startQuizBtn.disabled = true;
-                startTestBtn.disabled = true;
-                const response = await fetch('./nptel_education_sustainable.json');
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                allQuestions = await response.json();
-                populateWeekSelectors();
-            } catch (error) {
-                console.error("Failed to load questions:", error);
-                setupContainer.innerHTML = `<p class="text-red-500 text-center">Failed to load quiz data. Make sure 'nptel_education_sustainable.json' is in the same folder.</p>`;
-            } finally {
-                loadingText.classList.add('hidden');
-                startQuizBtn.disabled = false;
-                startTestBtn.disabled = false;
-            }
-        }
+    <p style="font-size:.82rem; margin-bottom:16px;">
+      Expected format: <code style="color:var(--accent); font-family:var(--mono);">"Week N: Title": [{ question, options[], answer }]</code>
+    </p>
 
-        function populateWeekSelectors() {
-            const weeks = Object.keys(allQuestions).map(key => {
-                const match = key.match(/Week (\d+)/);
-                return match ? parseInt(match[1]) : null;
-            }).filter(week => week !== null).sort((a, b) => a - b);
+    <button class="btn btn-primary btn-full" id="btn-continue-upload" disabled>
+      Continue →
+    </button>
+  </div>
+</div>
 
-            weeks.forEach(week => {
-                startWeekSelect.add(new Option(`Week ${week}`, week));
-                endWeekSelect.add(new Option(`Week ${week}`, week));
-            });
-            if (weeks.length > 0) endWeekSelect.value = weeks[weeks.length - 1];
-        }
+<!-- ═══ PAGE: HOME ═══ -->
+<div id="page-home" class="page">
+  <div class="back-link" onclick="goTo('page-upload')">← Back</div>
+  <div class="card">
+    <div class="label">Select Course</div>
+    <h2 style="margin-bottom:20px;">Choose what to practice</h2>
 
-        // --- QUIZ INITIALIZATION ---
-        function startQuizSession() {
-            // Reset state
-            currentQuestionIndex = 0;
-            score = 0;
-            incorrectlyAnsweredQuestions = [];
-            scoreEl.textContent = score;
-            totalQuestionsEl.textContent = quizQuestions.length;
+    <div class="course-grid" id="course-grid"></div>
 
-            // Transition UI
-            setupContainer.classList.add('hidden');
-            resultContainer.classList.add('hidden');
-            quizContainer.classList.remove('hidden');
+    <div class="divider"></div>
 
-            // Start timer
-            startTime = Date.now();
-            timerInterval = setInterval(updateTimer, 1000);
+    <div class="label">Practice Mode</div>
+    <div class="mode-grid" id="mode-grid">
+      <div class="mode-card" id="mode-weekly" onclick="startWeeklyMode()">
+        <div class="mode-icon">📅</div>
+        <div>
+          <h3>Week by Week</h3>
+          <p>Choose specific weeks and drill them in order</p>
+        </div>
+        <div class="badge">FOCUSED</div>
+      </div>
+      <div class="mode-card" id="mode-random" onclick="startRandomMode()">
+        <div class="mode-icon">🎲</div>
+        <div>
+          <h3>Random Mix</h3>
+          <p>Shuffle all questions from all weeks</p>
+        </div>
+        <div class="badge">CHALLENGE</div>
+      </div>
+      <div class="mode-card mistake-mode" id="mode-mistakes" onclick="startMistakeMode()">
+        <div class="mode-icon">🔁</div>
+        <div>
+          <h3>Fix Mistakes</h3>
+          <p>Retry only the questions you got wrong</p>
+        </div>
+        <div class="badge">REVIEW</div>
+        <div class="mistake-count" id="mistake-badge">0 saved</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            showQuestion();
-        }
+<!-- ═══ PAGE: WEEK SELECT ═══ -->
+<div id="page-week-select" class="page">
+  <div class="back-link" onclick="goTo('page-home')">← Back</div>
+  <div class="card">
+    <div class="label">Week by Week Mode</div>
+    <h2 style="margin-bottom:6px;">Select Weeks</h2>
+    <p style="margin-bottom:4px;">Pick one or more weeks to practice. All selected questions will be shuffled together.</p>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="divider"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-ghost btn-sm" onclick="selectAllWeeks()">Select All</button>
+      <button class="btn btn-ghost btn-sm" onclick="clearWeeks()">Clear</button>
+      <button class="btn btn-primary" style="margin-left:auto;" onclick="launchWeekQuiz()" id="btn-launch-week">Start Quiz →</button>
+    </div>
+  </div>
+</div>
 
-        // Mode 1: Week-Based Quiz
-        function prepareWeekBasedQuiz() {
-            const startWeek = parseInt(startWeekSelect.value);
-            const endWeek = parseInt(endWeekSelect.value);
+<!-- ═══ PAGE: QUIZ ═══ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-header">
+    <div>
+      <div class="label" id="quiz-mode-label">QUIZ</div>
+      <div style="font-family:var(--mono); font-size:.85rem; color:var(--sub);" id="quiz-course-label">—</div>
+    </div>
+    <div class="quiz-meta">
+      <div class="meta-item">
+        <span class="meta-label">QUESTION</span>
+        <span class="meta-val" id="q-num">—</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">SCORE</span>
+        <span class="meta-val green" id="q-score">0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">TIME</span>
+        <span class="meta-val" id="q-timer">0:00</span>
+      </div>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="q-progress" style="width:0%"></div></div>
 
-            if (startWeek > endWeek) {
-                alert("Start week cannot be after the end week.");
-                return;
-            }
+  <div class="question-card">
+    <div class="question-week-tag"><span class="tag" id="q-week-tag">Week —</span></div>
+    <div class="question-text" id="q-text"></div>
+    <div class="options" id="q-options"></div>
+  </div>
 
-            quizQuestions = [];
-            for (let i = startWeek; i <= endWeek; i++) {
-                const weekKey = Object.keys(allQuestions).find(key => key.startsWith(`Week ${i}:`));
-                if (weekKey && Array.isArray(allQuestions[weekKey])) {
-                    quizQuestions.push(...allQuestions[weekKey]);
-                }
-            }
-            quizQuestions.sort(() => Math.random() - 0.5);
+  <div class="quiz-footer">
+    <button class="btn btn-ghost btn-sm" onclick="quitQuiz()">✕ Quit</button>
+    <button class="btn btn-primary" id="btn-next" style="display:none;" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
 
-            if (quizQuestions.length === 0) {
-                alert("No questions found for the selected week range.");
-                return;
-            }
+<!-- ═══ PAGE: RESULT ═══ -->
+<div id="page-result" class="page">
+  <div class="card">
+    <div class="label" style="text-align:center;">Session Complete</div>
+    <div id="result-emoji" style="text-align:center; font-size:2.5rem; margin:12px 0;">🎉</div>
+    <div class="result-score" id="result-score">0/0</div>
+    <p style="text-align:center; margin-bottom:0;" id="result-subtext"></p>
 
-            startQuizSession();
-        }
+    <div class="result-stats">
+      <div class="stat-box">
+        <div class="stat-val" id="stat-correct">0</div>
+        <div class="stat-label">Correct</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-wrong" style="color:var(--red)">0</div>
+        <div class="stat-label">Wrong</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-time">—</div>
+        <div class="stat-label">Time</div>
+      </div>
+    </div>
 
-        // Mode 2: Test Mode
-        function prepareTestMode() {
-            let masterQuestionList = Object.values(allQuestions).flat();
+    <div id="result-review" class="review-list"></div>
 
-            if (masterQuestionList.length < 50) {
-                alert(`Not enough questions for Test Mode. Found ${masterQuestionList.length}, need 50.`);
-                return;
-            }
+    <div class="result-actions">
+      <button class="btn btn-ghost" onclick="goTo('page-home')">🏠 Home</button>
+      <button class="btn btn-outline" id="btn-practice-mistakes" onclick="startMistakeMode()" style="display:none;">🔁 Practice Mistakes</button>
+      <button class="btn btn-primary" id="btn-retry" onclick="retryQuiz()">↺ Retry</button>
+    </div>
+  </div>
+</div>
 
-            // Shuffle and slice to get 50 unique random questions
-            masterQuestionList.sort(() => Math.random() - 0.5);
-            quizQuestions = masterQuestionList.slice(0, 50);
+<div class="toast" id="toast"></div>
 
-            startQuizSession();
-        }
-
-
-        // --- CORE QUIZ LOGIC ---
-        function showQuestion() {
-            resetQuestionState();
-            const currentQuestion = quizQuestions[currentQuestionIndex];
-            questionNumberEl.textContent = currentQuestionIndex + 1;
-            questionTextEl.innerHTML = currentQuestion.question;
-
-            const shuffledOptions = [...currentQuestion.options].sort(() => Math.random() - 0.5);
-            shuffledOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.innerHTML = option;
-                button.classList.add('quiz-option', 'w-full', 'text-left', 'p-3', 'border-2', 'border-gray-300', 'rounded-lg', 'hover:border-blue-400', 'transition-all', 'duration-200');
-                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
-            Array.from(optionsContainer.children).forEach(button => button.disabled = true);
-
-            const currentQuestion = quizQuestions[currentQuestionIndex];
-            if (selectedOption === correctAnswer) {
-                score++;
-                scoreEl.textContent = score;
-                selectedButton.classList.add('correct');
-            } else {
-                selectedButton.classList.add('incorrect');
-                Array.from(optionsContainer.children).forEach(button => {
-                    if (button.innerHTML === correctAnswer) button.classList.add('correct');
-                });
-                incorrectlyAnsweredQuestions.push({
-                    question: currentQuestion.question,
-                    userAnswer: selectedOption,
-                    correctAnswer: correctAnswer
-                });
-            }
-            nextQuestionBtn.classList.remove('hidden');
-        }
-
-        function resetQuestionState() {
-            nextQuestionBtn.classList.add('hidden');
-            optionsContainer.innerHTML = '';
-        }
-
-        // --- RESULTS & REVIEW ---
-        function showResult() {
-            clearInterval(timerInterval);
-            const totalTime = Math.floor((Date.now() - startTime) / 1000);
-
-            quizContainer.classList.add('hidden');
-            resultContainer.classList.remove('hidden');
-
-            finalScoreEl.textContent = `${score} / ${quizQuestions.length}`;
-            totalTimeTakenEl.textContent = formatTime(totalTime);
-
-            displayIncorrectAnswers();
-        }
-
-        function displayIncorrectAnswers() {
-            reviewContainer.innerHTML = '';
-            if (incorrectlyAnsweredQuestions.length > 0) {
-                let reviewHtml = '<h3 class="text-2xl font-bold text-gray-800 mb-4 border-t pt-6">Review Your Mistakes</h3>';
-                incorrectlyAnsweredQuestions.forEach((item, index) => {
-                    reviewHtml += `
-                        <div class="mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <p class="font-semibold mb-3 text-gray-900">${index + 1}. ${item.question}</p>
-                            <p class="p-2 rounded bg-red-100 text-red-800 border border-red-200"><strong>Your Answer:</strong> ${item.userAnswer}</p>
-                            <p class="mt-2 p-2 rounded bg-green-100 text-green-800 border border-green-200"><strong>Correct Answer:</strong> ${item.correctAnswer}</p>
-                        </div>`;
-                });
-                reviewContainer.innerHTML = reviewHtml;
-            } else if (quizQuestions.length > 0) {
-                reviewContainer.innerHTML = '<p class="text-center text-green-600 font-semibold text-lg mt-4 border-t pt-6">🎉 Congratulations! You answered every question correctly! 🎉</p>';
-            }
-        }
-
-        // --- UTILITIES ---
-        function formatTime(seconds) {
-            const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const remainingSeconds = String(seconds % 60).padStart(2, '0');
-            return `${minutes}:${remainingSeconds}`;
-        }
-
-        function updateTimer() {
-            const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-            timerEl.textContent = formatTime(elapsedTime);
-        }
-
-        // --- EVENT LISTENERS ---
-        startQuizBtn.addEventListener('click', prepareWeekBasedQuiz);
-        startTestBtn.addEventListener('click', prepareTestMode);
-
-        nextQuestionBtn.addEventListener('click', () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < quizQuestions.length) {
-                showQuestion();
-            } else {
-                showResult();
-            }
-        });
-
-        restartQuizBtn.addEventListener('click', () => {
-            resultContainer.classList.add('hidden');
-            setupContainer.classList.remove('hidden');
-            timerEl.textContent = '00:00';
-        });
-
-        document.addEventListener('DOMContentLoaded', loadQuestions);
-    </script>
+<script src="script.js"></script>
 </body>
-
 </html>
