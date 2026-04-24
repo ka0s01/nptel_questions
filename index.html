@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NPTEL Practice</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+  
+  </style>
+</head>
+<body>
+
+<!-- ═══ PAGE: UPLOAD ═══ -->
+<div id="page-upload" class="page active">
+  <div class="logo">NPTEL // PRACTICE</div>
+  <div class="card">
+    <div class="label">Getting Started</div>
+    <h1 style="margin-bottom:8px;">Upload Your<br/>Question Bank</h1>
+    <p style="margin-bottom:28px;">Drop your NPTEL JSON files to begin practicing. Each file should be a course's question bank.</p>
+
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept=".json" multiple />
+      <div class="drop-icon">📂</div>
+      <h3>Drop JSON files here</h3>
+      <p>or click to browse · supports multiple files</p>
+    </div>
+
+    <div class="upload-chips" id="upload-chips"></div>
+
+    <div class="divider"></div>
+
+    <p style="font-size:.82rem; margin-bottom:16px;">
+      Expected format: <code style="color:var(--accent); font-family:var(--mono);">"Week N: Title": [{ question, options[], answer }]</code>
+    </p>
+
+    <button class="btn btn-primary btn-full" id="btn-continue-upload" disabled>
+      Continue →
+    </button>
+  </div>
+</div>
+
+<!-- ═══ PAGE: HOME ═══ -->
+<div id="page-home" class="page">
+  <div class="back-link" onclick="goTo('page-upload')">← Back</div>
+  <div class="card">
+    <div class="label">Select Course</div>
+    <h2 style="margin-bottom:20px;">Choose what to practice</h2>
+
+    <div class="course-grid" id="course-grid"></div>
+
+    <div class="divider"></div>
+
+    <div class="label">Practice Mode</div>
+    <div class="mode-grid" id="mode-grid">
+      <div class="mode-card" id="mode-weekly" onclick="startWeeklyMode()">
+        <div class="mode-icon">📅</div>
+        <div>
+          <h3>Week by Week</h3>
+          <p>Choose specific weeks and drill them in order</p>
+        </div>
+        <div class="badge">FOCUSED</div>
+      </div>
+      <div class="mode-card" id="mode-random" onclick="startRandomMode()">
+        <div class="mode-icon">🎲</div>
+        <div>
+          <h3>Random Mix</h3>
+          <p>Shuffle all questions from all weeks</p>
+        </div>
+        <div class="badge">CHALLENGE</div>
+      </div>
+      <div class="mode-card mistake-mode" id="mode-mistakes" onclick="startMistakeMode()">
+        <div class="mode-icon">🔁</div>
+        <div>
+          <h3>Fix Mistakes</h3>
+          <p>Retry only the questions you got wrong</p>
+        </div>
+        <div class="badge">REVIEW</div>
+        <div class="mistake-count" id="mistake-badge">0 saved</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: WEEK SELECT ═══ -->
+<div id="page-week-select" class="page">
+  <div class="back-link" onclick="goTo('page-home')">← Back</div>
+  <div class="card">
+    <div class="label">Week by Week Mode</div>
+    <h2 style="margin-bottom:6px;">Select Weeks</h2>
+    <p style="margin-bottom:4px;">Pick one or more weeks to practice. All selected questions will be shuffled together.</p>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="divider"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-ghost btn-sm" onclick="selectAllWeeks()">Select All</button>
+      <button class="btn btn-ghost btn-sm" onclick="clearWeeks()">Clear</button>
+      <button class="btn btn-primary" style="margin-left:auto;" onclick="launchWeekQuiz()" id="btn-launch-week">Start Quiz →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE: QUIZ ═══ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-header">
+    <div>
+      <div class="label" id="quiz-mode-label">QUIZ</div>
+      <div style="font-family:var(--mono); font-size:.85rem; color:var(--sub);" id="quiz-course-label">—</div>
+    </div>
+    <div class="quiz-meta">
+      <div class="meta-item">
+        <span class="meta-label">QUESTION</span>
+        <span class="meta-val" id="q-num">—</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">SCORE</span>
+        <span class="meta-val green" id="q-score">0</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">TIME</span>
+        <span class="meta-val" id="q-timer">0:00</span>
+      </div>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="q-progress" style="width:0%"></div></div>
+
+  <div class="question-card">
+    <div class="question-week-tag"><span class="tag" id="q-week-tag">Week —</span></div>
+    <div class="question-text" id="q-text"></div>
+    <div class="options" id="q-options"></div>
+  </div>
+
+  <div class="quiz-footer">
+    <button class="btn btn-ghost btn-sm" onclick="quitQuiz()">✕ Quit</button>
+    <button class="btn btn-primary" id="btn-next" style="display:none;" onclick="nextQuestion()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══ PAGE: RESULT ═══ -->
+<div id="page-result" class="page">
+  <div class="card">
+    <div class="label" style="text-align:center;">Session Complete</div>
+    <div id="result-emoji" style="text-align:center; font-size:2.5rem; margin:12px 0;">🎉</div>
+    <div class="result-score" id="result-score">0/0</div>
+    <p style="text-align:center; margin-bottom:0;" id="result-subtext"></p>
+
+    <div class="result-stats">
+      <div class="stat-box">
+        <div class="stat-val" id="stat-correct">0</div>
+        <div class="stat-label">Correct</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-wrong" style="color:var(--red)">0</div>
+        <div class="stat-label">Wrong</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-time">—</div>
+        <div class="stat-label">Time</div>
+      </div>
+    </div>
+
+    <div id="result-review" class="review-list"></div>
+
+    <div class="result-actions">
+      <button class="btn btn-ghost" onclick="goTo('page-home')">🏠 Home</button>
+      <button class="btn btn-outline" id="btn-practice-mistakes" onclick="startMistakeMode()" style="display:none;">🔁 Practice Mistakes</button>
+      <button class="btn btn-primary" id="btn-retry" onclick="retryQuiz()">↺ Retry</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
